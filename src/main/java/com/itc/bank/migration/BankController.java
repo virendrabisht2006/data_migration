@@ -1,6 +1,6 @@
 package com.itc.bank.migration;
 
-import com.itc.bank.migration.repository.command.ReferfriendRepository;
+import com.itc.bank.migration.service.HomeClaimService;
 import com.itc.bank.migration.service.ReferFriendService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,9 @@ public class BankController {
     @Autowired
     private ReferFriendService referFriendService;
 
+    @Autowired
+    private HomeClaimService homeClaimService;
+
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> welcome(UriComponentsBuilder ucBuilder) {
@@ -36,7 +39,8 @@ public class BankController {
         logger.info("About to migrate data from source to destination");
         String response = null;
         try {
-            referFriendService.migrateReferFriend();
+            //  referFriendService.migrateReferFriend();
+            homeClaimService.migrateHomeClaim();
             response = "Migration completed successfully +\n\n\n";
             return new ResponseEntity<String>(response, HttpStatus.OK);
         } catch (Exception e) {
